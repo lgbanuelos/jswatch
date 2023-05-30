@@ -15,5 +15,13 @@ defmodule JswatchWeb.ClockManager do
     {:noreply, state |> Map.put(:time, time) }
   end
 
-  def handle_info(_event, state), do: {:noreply, state}
+  def handle_info(:"top-left-pressed", %{ui_pid: ui} = state) do
+    GenServer.cast(ui, :toggle_alarm)
+    {:noreply, state}
+  end
+
+  def handle_info(event, state) do
+    IO.inspect(event)
+    {:noreply, state}
+  end
 end

@@ -1,4 +1,4 @@
-defmodule TimexWeb.StopwatchManager do
+defmodule JswatchWeb.StopwatchManager do
   use GenServer
 
   def init(ui) do

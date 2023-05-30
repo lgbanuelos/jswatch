@@ -4,10 +4,14 @@ import channel from "./ui_socket.js"
 export default App = () => {
   const [time, setTime] = useState("12:00:00");
   const [indiglo, setIndiglo] = useState("white");
+  const [alarm, setAlarm] = useState(false);
+
   const handleEvent = event => channel.push(event, {});
   channel.on("setIndiglo", _payload => setIndiglo("cyan"));
   channel.on("unsetIndiglo", _payload => setIndiglo("white"));
   channel.on("setTimeDisplay", payload => setTime(payload.time));
+  channel.on("toggleAlarm", _payload => setAlarm(!alarm));
+
   return (
     <svg width="250" height="250">
       <image href="/images/watch.gif"></image>
@@ -28,6 +32,9 @@ export default App = () => {
             x="209" y="160" width="12" height="12"
             stroke="white" strokeWidth="1" fill="transparent" />
       <rect x="52" y="100" width="120" height="50" fill={indiglo} />
+      {
+            alarm ? <text x="150" y="110" fontFamily="monospace" fontSize="12px" fill="black" fontWeight="bold">&#9834;</text> : null
+      }
       <text x="73" y="135" fontFamily="monospace" fontSize="18px" fill="black" fontWeight="bold" xmlSpace="preserve">{time}</text>
     </svg>
   );
